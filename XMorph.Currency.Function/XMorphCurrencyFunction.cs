@@ -8,7 +8,7 @@ namespace XMorph.Currency.Function {
 
     public class XMorphCurrencyFunction {
         [FunctionName("UpdateAllRates")]
-        public async Task UpdateAllRates([TimerTrigger("0 */15 12-23,0-4 * * *")] TimerInfo myTimer, ILogger log) {
+        public async Task UpdateAllRates([TimerTrigger("0 */15 12-23,0-4 * * 0-5")] TimerInfo myTimer, ILogger log) {
             using var client = new HttpClient();
             var url = Environment.GetEnvironmentVariable("UPDATE_ALL_RATES_URL");
             await client.GetAsync(url);

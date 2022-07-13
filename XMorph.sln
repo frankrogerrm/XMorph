@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMorph.Currency.Core", "XMo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMorph.Currency.DAL", "XMorph.Currency.DAL\XMorph.Currency.DAL.csproj", "{C11448FB-7F6F-4CD2-B6F4-5628122CF325}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMorph.Currency.Function", "XMorph.Currency.Function\XMorph.Currency.Function.csproj", "{19BEC822-B9EE-4B85-85F2-D72327AB86EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMorph.Currency.Function", "XMorph.Currency.Function\XMorph.Currency.Function.csproj", "{19BEC822-B9EE-4B85-85F2-D72327AB86EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMorph.Currency.Repository", "XMorph.Currency.Repository\XMorph.Currency.Repository.csproj", "{F3A7CF85-6EFC-43E6-82BA-61C1D99E1AFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{19BEC822-B9EE-4B85-85F2-D72327AB86EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19BEC822-B9EE-4B85-85F2-D72327AB86EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19BEC822-B9EE-4B85-85F2-D72327AB86EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3A7CF85-6EFC-43E6-82BA-61C1D99E1AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3A7CF85-6EFC-43E6-82BA-61C1D99E1AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3A7CF85-6EFC-43E6-82BA-61C1D99E1AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3A7CF85-6EFC-43E6-82BA-61C1D99E1AFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

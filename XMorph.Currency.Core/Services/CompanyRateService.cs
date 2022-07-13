@@ -1,4 +1,8 @@
-﻿namespace XMorph.Currency.Core.Services {
+﻿using AgileObjects.AgileMapper.Extensions;
+using Microsoft.EntityFrameworkCore.Design;
+using XMorph.Currency.Repository.Generic.Interface;
+
+namespace XMorph.Currency.Core.Services {
 
     using AgileObjects.AgileMapper;
     using XMorph.Currency.Core.Models;
@@ -18,18 +22,21 @@
 
     public class CompanyRateService : ICompanyRateService {
 
-        private XMorphCurrencyContext _context;
+        //private XMorphCurrencyContext _context;
+        private IGenericRepository<CompanyRate> _companyRateRepository;
+        private IGenericRepository<Company> _companyRepository;
 
-        public CompanyRateService(XMorphCurrencyContext context) {
+        public CompanyRateService(IGenericRepository<CompanyRate> companyRateRepository, IGenericRepository<Company> companyRepository) {
 
-            _context = context;
+            _companyRateRepository = companyRateRepository;
+            _companyRepository = companyRepository;
 
         }
 
         public CompanyRateModel SaveUpdateCompanyRate(CompanyRateModel companyRateModel) {
 
             var model = Mapper.Map(companyRateModel).ToANew<CompanyRate>();
-            var companiesModel = _context.CompanyRates
+            var companiesModel = _companyRateRepository.GetAll()
                 .Where(x => x.CompanyId.Equals(model.CompanyId) && x.Status)
                 .ToList();
             companiesModel.ForEach(x => {
@@ -37,8 +44,8 @@
                 x.UpdatedDate = DateTime.Now;
             });
 
-            _context.CompanyRates.Add(model);
-            _context.SaveChanges();
+            _companyRateRepository.Insert(model);
+            _companyRateRepository.Save();
             return Mapper.Map(model).ToANew<CompanyRateModel>();
 
         }
@@ -46,39 +53,51 @@
         public List<CompanyRateModel> CleanCompanyRateByDays(int days) {
 
             var datetimeToRemove = DateTime.Now.AddDays(-1 * days);
-            var ratesToRemove = _context.CompanyRates
+            var ratesToRemove = _companyRateRepository.GetAll()
                 .Where(x => !x.Status && x.UpdatedDate < datetimeToRemove)
                 .ToList();
-            _context.CompanyRates.RemoveRange(ratesToRemove);
-            _context.SaveChanges();
+            _companyRateRepository.Delete(ratesToRemove);
+            _companyRateRepository.Save();
 
             return ratesToRemove.Select(x => Mapper.Map(x).ToANew<CompanyRateModel>()).ToList();
 
         }
 
         public List<CompanyRateModel> ForceCleanCompanyRateByDays() {
-            
-            var ratesToRemove = _context.CompanyRates
+
+            var ratesToRemove = _companyRateRepository.GetAll()
                 .Where(x => !x.Status)
                 .ToList();
-            _context.CompanyRates.RemoveRange(ratesToRemove);
-            _context.SaveChanges();
+            _companyRateRepository.Delete(ratesToRemove);
+            _companyRateRepository.Save();
 
             return ratesToRemove.Select(x => Mapper.Map(x).ToANew<CompanyRateModel>()).ToList();
 
         }
 
         public CompanyRateModel GetCompanyRateByCompanyId(int companyId) {
+            var result = (_companyRateRepository.GetAll()
+                .Join(_companyRepository.GetAll(), cr => cr.CompanyId, c => c.Id, (cr, c) => new { cr, c })
+                .Where(t => t.c.Status && t.cr.Status && t.c.Id.Equals(companyId))
+                .Select(t => MapToCompanyRateModel(t.cr, t.c))).FirstOrDefault();
 
-            var result = _context.CompanyRates.FirstOrDefault(x => x.Status && x.CompanyId.Equals(companyId));
-            return Mapper.Map(result).ToANew<CompanyRateModel>();
+            return result!;
 
+        }
+
+        private static CompanyRateModel MapToCompanyRateModel(CompanyRate companyRate, Company company) {
+            var model = Mapper.Map(companyRate).ToANew<CompanyRateModel>();
+            model.CompanyName = company.Name;
+            return model;
         }
 
         public List<CompanyRateModel> GetAllCompanyRates() {
 
-            var result = _context.CompanyRates.Where(x => x.Status)
-                .Select(x => Mapper.Map(x).ToANew<CompanyRateModel>()).ToList();
+            var result = (_companyRateRepository.GetAll()
+                .Join(_companyRepository.GetAll(), cr => cr.CompanyId, c => c.Id, (cr, c) => new { cr, c })
+                .Where(t => t.cr.Status && t.c.Status)
+                .Select(t => MapToCompanyRateModel(t.cr, t.c))).ToList();
+
             return result;
 
         }

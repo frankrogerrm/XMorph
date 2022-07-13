@@ -12,7 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\XMorph.Currency.DAL\XMorph.Currency.DAL.csproj" />
+    <Folder Include="Builder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XMorph.Currency.Repository\XMorph.Currency.Repository.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,6 +7,9 @@
         public XMorphCurrencyContext(DbContextOptions<XMorphCurrencyContext> options) : base(options) {
 
         }
+        public XMorphCurrencyContext() {
+
+        }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<CompanyFilter> CompanyFilters { get; set; }
         public virtual DbSet<CompanyFilterType> CompanyFilterTypes { get; set; }

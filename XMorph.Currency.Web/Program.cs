@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using XMorph.Currency.Core.Services;
 using XMorph.Currency.DAL.DBContext;
+using XMorph.Currency.Repository.Generic;
+using XMorph.Currency.Repository.Generic.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +14,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ICurrencyService,CurrencyService>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<ICompanyFilterService, CompanyFilterService>();
 builder.Services.AddScoped<ICompanyRateService, CompanyRateService>();

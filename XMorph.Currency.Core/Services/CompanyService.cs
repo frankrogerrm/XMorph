@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using XMorph.Currency.Repository.Generic.Interface;
 
 namespace XMorph.Currency.Core.Services {
     using AgileObjects.AgileMapper;
@@ -12,18 +13,19 @@ namespace XMorph.Currency.Core.Services {
         CompanyModel GetCompanyById(int companyId);
     }
 
-    public class CompanyService : ICompanyService
-    {
-        private XMorphCurrencyContext _context;
+    public class CompanyService : ICompanyService {
+        //private XMorphCurrencyContext _context;
         private ICompanyFilterService _companyFilterService;
+        private IGenericRepository<Company> _companyRepository;
 
-        public CompanyService(XMorphCurrencyContext context,
-                                ICompanyFilterService companyFilterService) {
-            _context = context;
+        public CompanyService(ICompanyFilterService companyFilterService,
+                                IGenericRepository<Company> companyRepository) {
+
             _companyFilterService = companyFilterService;
+            _companyRepository = companyRepository;
         }
         public List<CompanyModel> GetAllActiveCompanies() {
-            var result = _context.Companies.Where(x => x.Status)
+            var result = _companyRepository.GetAll().Where(x => x.Status)
                 .Select(x => Mapper.Map(x).ToANew<CompanyModel>())
                 .ToList();
             result.ForEach(x => x.CompanyFilterModels = _companyFilterService.GetCompanyFilterByCompanyId(x.Id));
@@ -43,8 +45,8 @@ namespace XMorph.Currency.Core.Services {
             return result;
         }
 
-        public CompanyModel GetCompanyById(int  companyid) {
-            var result = _context.Companies.Where(x => x.Status && x.Id.Equals(companyid))
+        public CompanyModel GetCompanyById(int companyId) {
+            var result = _companyRepository.GetAll().Where(x => x.Status && x.Id.Equals(companyId))
                 .Select(x => Mapper.Map(x).ToANew<CompanyModel>())
                 .FirstOrDefault();
             if (result == null) {

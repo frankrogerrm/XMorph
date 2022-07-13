@@ -3,22 +3,27 @@
     using AgileObjects.AgileMapper;
     using XMorph.Currency.Core.Models;
     using XMorph.Currency.DAL.DBContext;
+    using XMorph.Currency.DAL.Entities;
+    using XMorph.Currency.Repository.Generic.Interface;
 
     public interface ICompanyFilterService {
         List<CompanyFilterModel> GetCompanyFilterByCompanyId(int companyId);
     }
     public class CompanyFilterService : ICompanyFilterService {
 
-        private XMorphCurrencyContext _context;
+        private IGenericRepository<CompanyFilter> _companyFilter;
+        private IGenericRepository<CompanyFilterType> _companyFilterType;
 
-        public CompanyFilterService(XMorphCurrencyContext context) {
-            _context = context;
+        public CompanyFilterService(IGenericRepository<CompanyFilter> companyFilter, 
+                                    IGenericRepository<CompanyFilterType> companyFilterType) {
+            _companyFilter = companyFilter;
+            _companyFilterType = companyFilterType;
         }
 
         public List<CompanyFilterModel> GetCompanyFilterByCompanyId(int companyId) {
 
-            var result = (from cf in _context.CompanyFilters
-                          join cft in _context.CompanyFilterTypes on cf.FilterTypeId equals cft.Id
+            var result = (from cf in _companyFilter.GetAll()
+                          join cft in _companyFilterType.GetAll() on cf.FilterTypeId equals cft.Id
                           where cf.Companyid == companyId
                           select new CompanyFilterModel {
                               CompanyId = cf.Companyid,

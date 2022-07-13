@@ -1,4 +1,6 @@
-﻿namespace XMorph.Currency.Web.Controllers {
+﻿using XMorph.Currency.Core.Utilities;
+
+namespace XMorph.Currency.Web.Controllers {
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -20,9 +22,9 @@
         }
 
         [HttpGet(Name = "GetCurrency")]
-        public List<CompanyRateModel> Get() {
-            var result = _companyRateService.GetAllCompanyRates();
-            return result;
+        public IActionResult Get() {
+            var result = _companyRateService.GetAllCompanyRates().Format();
+            return Ok(result);
         }
     }
 }
