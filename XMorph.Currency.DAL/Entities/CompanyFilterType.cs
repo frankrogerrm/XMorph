@@ -1,7 +1,7 @@
-﻿namespace XMorph.Currency.DAL.Entities {
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+namespace XMorph.Currency.DAL.Entities {
 
     [Table("CompanyFilterType")]
     public class CompanyFilterType {

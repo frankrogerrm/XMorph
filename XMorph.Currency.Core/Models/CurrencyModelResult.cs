@@ -1,6 +1,6 @@
-﻿namespace XMorph.Currency.Core.Models {
+﻿using System;
 
-    using System;
+namespace XMorph.Currency.Core.Models {
 
     public class CurrencyModelResult {
         public double SellRate { get; set; }

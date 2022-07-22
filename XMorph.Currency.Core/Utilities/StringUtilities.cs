@@ -13,7 +13,7 @@ namespace XMorph.Currency.Core.Utilities {
                 .Replace(" ", string.Empty);
         }
 
-        public static string Format<T>(this T t)
+        public static string BeautyJson<T>(this T t)
         {
             return JsonSerializer.Serialize(t, new JsonSerializerOptions() {WriteIndented = true});
         }

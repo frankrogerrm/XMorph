@@ -8,7 +8,7 @@ namespace XMorph.Currency.Function {
 
     public class XMorphCurrencyFunction {
         [FunctionName("UpdateAllRates")]
-        public async Task UpdateAllRates([TimerTrigger("0 */15 12-23,0-4 * * 0-5")] TimerInfo myTimer, ILogger log) {
+        public async Task UpdateAllRates([TimerTrigger("0 */15 7-21 * * 1-6")] TimerInfo myTimer, ILogger log) {
             using var client = new HttpClient();
             var url = Environment.GetEnvironmentVariable("UPDATE_ALL_RATES_URL");
             await client.GetAsync(url);
@@ -17,7 +17,7 @@ namespace XMorph.Currency.Function {
         }
 
         [FunctionName("CleanCompanyRateByDays")]
-        public async Task CleanCompanyRateByDays([TimerTrigger("0 5 0,12 * * 0-5")] TimerInfo myTimer, ILogger log) {
+        public async Task CleanCompanyRateByDays([TimerTrigger("0 5 0,12 * * 1-6")] TimerInfo myTimer, ILogger log) {
             using var client = new HttpClient();
             var url = Environment.GetEnvironmentVariable("CLEAN_COPMPANY_RATE_URL") + Environment.GetEnvironmentVariable("CLEAN_COPMPANY_RATE_DAYS");
             await client.GetAsync(url);

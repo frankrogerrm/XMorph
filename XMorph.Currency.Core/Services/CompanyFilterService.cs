@@ -1,10 +1,10 @@
-﻿namespace XMorph.Currency.Core.Services {
+﻿using AgileObjects.AgileMapper;
+using XMorph.Currency.Core.Models;
+using XMorph.Currency.DAL.DBContext;
+using XMorph.Currency.DAL.Entities;
+using XMorph.Currency.Repository.Generic.Interface;
 
-    using AgileObjects.AgileMapper;
-    using XMorph.Currency.Core.Models;
-    using XMorph.Currency.DAL.DBContext;
-    using XMorph.Currency.DAL.Entities;
-    using XMorph.Currency.Repository.Generic.Interface;
+namespace XMorph.Currency.Core.Services {
 
     public interface ICompanyFilterService {
         List<CompanyFilterModel> GetCompanyFilterByCompanyId(int companyId);
@@ -14,7 +14,7 @@
         private IGenericRepository<CompanyFilter> _companyFilter;
         private IGenericRepository<CompanyFilterType> _companyFilterType;
 
-        public CompanyFilterService(IGenericRepository<CompanyFilter> companyFilter, 
+        public CompanyFilterService(IGenericRepository<CompanyFilter> companyFilter,
                                     IGenericRepository<CompanyFilterType> companyFilterType) {
             _companyFilter = companyFilter;
             _companyFilterType = companyFilterType;

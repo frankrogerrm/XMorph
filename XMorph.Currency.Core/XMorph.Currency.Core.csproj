@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Builder\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\XMorph.Currency.Repository\XMorph.Currency.Repository.csproj" />
   </ItemGroup>
 

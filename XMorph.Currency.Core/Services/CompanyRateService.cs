@@ -1,15 +1,9 @@
-﻿using AgileObjects.AgileMapper.Extensions;
-using Microsoft.EntityFrameworkCore.Design;
+﻿using AgileObjects.AgileMapper;
+using XMorph.Currency.Core.Models;
+using XMorph.Currency.DAL.Entities;
 using XMorph.Currency.Repository.Generic.Interface;
 
 namespace XMorph.Currency.Core.Services {
-
-    using AgileObjects.AgileMapper;
-    using XMorph.Currency.Core.Models;
-    using XMorph.Currency.DAL.DBContext;
-    using XMorph.Currency.DAL.Entities;
-
-
     public interface ICompanyRateService {
 
         CompanyRateModel SaveUpdateCompanyRate(CompanyRateModel companyRateModel);

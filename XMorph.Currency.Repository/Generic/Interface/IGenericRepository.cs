@@ -1,8 +1,4 @@
-﻿
-
-namespace XMorph.Currency.Repository.Generic.Interface {
-    using System.Collections.Generic;
-    using System.Collections;
+﻿namespace XMorph.Currency.Repository.Generic.Interface {
 
     public interface IGenericRepository<T> where T : class {
         IQueryable<T> GetAll();
@@ -11,5 +7,6 @@ namespace XMorph.Currency.Repository.Generic.Interface {
         void Update(T obj);
         void Delete(object id);
         void Save();
+        void Save(T obj);
     }
 }

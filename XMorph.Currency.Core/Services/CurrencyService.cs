@@ -1,9 +1,9 @@
-﻿namespace XMorph.Currency.Core.Services {
+﻿using Newtonsoft.Json;
+using XMorph.Currency.Core.Enums;
+using XMorph.Currency.Core.Models;
+using XMorph.Currency.Core.Utilities;
 
-    using Newtonsoft.Json;
-    using XMorph.Currency.Core.Enums;
-    using XMorph.Currency.Core.Models;
-    using XMorph.Currency.Core.Utilities;
+namespace XMorph.Currency.Core.Services {
 
     public interface ICurrencyService {
         //Task<CompanyRateModel> WebToString(string companyName);

@@ -1,10 +1,8 @@
-﻿namespace XMorph.Currency.Repository.Generic {
+﻿using Microsoft.EntityFrameworkCore;
+using XMorph.Currency.DAL.DBContext;
+using XMorph.Currency.Repository.Generic.Interface;
 
-    using Microsoft.EntityFrameworkCore;
-    using System.Collections.Generic;
-    using System.Linq;
-    using XMorph.Currency.DAL.DBContext;
-    using XMorph.Currency.Repository.Generic.Interface;
+namespace XMorph.Currency.Repository.Generic {
 
     public class GenericRepository<T> : IGenericRepository<T> where T : class {
 
@@ -40,6 +38,10 @@
             _table.Remove(existing);
         }
         public void Save() {
+            _context.SaveChanges();
+        }
+        public void Save(T obj) {
+            Insert(obj);
             _context.SaveChanges();
         }
     }

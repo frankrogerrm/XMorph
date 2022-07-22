@@ -1,11 +1,9 @@
-﻿using System.Linq;
+﻿using AgileObjects.AgileMapper;
+using XMorph.Currency.Core.Models;
+using XMorph.Currency.DAL.Entities;
 using XMorph.Currency.Repository.Generic.Interface;
 
 namespace XMorph.Currency.Core.Services {
-    using AgileObjects.AgileMapper;
-    using XMorph.Currency.Core.Models;
-    using XMorph.Currency.DAL.DBContext;
-    using XMorph.Currency.DAL.Entities;
 
     public interface ICompanyService {
         List<CompanyModel> GetAllActiveCompanies();
