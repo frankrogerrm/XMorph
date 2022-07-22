@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AgileObjects.AgileMapper;
+using Konscious.Security.Cryptography;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Text;
-using AgileObjects.AgileMapper;
 using XMorph.Currency.Core.Models;
 using XMorph.Currency.Core.Services;
-using XMorph.Currency.Web.Controllers.Models;
-using Konscious.Security.Cryptography;
 using XMorph.Currency.Core.Utilities;
+using XMorph.Currency.Web.Controllers.Models;
 
 namespace XMorph.Currency.Web.Controllers.Api {
 
@@ -43,10 +43,8 @@ namespace XMorph.Currency.Web.Controllers.Api {
             if (!isValidPassword) {
                 return Ok("Wrong password");
             }
-            var accessToken = GenerateJSONWebToken();
-            _userService.UpdateToken(user.Id, accessToken);
-            SetJWTCookie(accessToken);
-            return Ok(accessToken);
+            user = Authenticate(user);
+            return Ok(user.BeautyUserJson());
         }
 
         [HttpPost]
@@ -59,14 +57,28 @@ namespace XMorph.Currency.Web.Controllers.Api {
                 return Ok("User already exists");
             }
 
+            user = SaveUser(request);
+            return Ok(user.BeautyUserJson());
+        }
+
+        private UserModel Authenticate(UserModel user) {
+
+            var accessToken = GenerateJSONWebToken();
+            user = _userService.UpdateToken(user.Id, accessToken);
+            SetJWTCookie(accessToken);
+            return user;
+
+        }
+                
+        private UserModel SaveUser(AuthenticationRequest request) {
             var userModel = Mapper.Map(request).ToANew<UserModel>();
             userModel.PasswordSalt = GenerateSalt();
             userModel.PasswordHash = HashPassword(request.Password, userModel.PasswordSalt);
             var accessToken = GenerateJSONWebToken();
             userModel.Token = accessToken;
-            user = _userService.SignUp(userModel);
+            var user = _userService.SignUp(userModel);
             SetJWTCookie(accessToken);
-            return Ok(user.BeautyJson());
+            return user;
         }
 
         private string GenerateJSONWebToken() {

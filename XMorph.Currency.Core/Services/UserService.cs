@@ -56,7 +56,7 @@ namespace XMorph.Currency.Core.Services {
         public UserModel UpdateToken(int id, string token) {
 
             var user = _userRepository.GetAll().FirstOrDefault(x => x.Id.Equals(id));
-            if (user != null) {
+            if (user == null) {
                 return null;
             }
             user.Token = token;

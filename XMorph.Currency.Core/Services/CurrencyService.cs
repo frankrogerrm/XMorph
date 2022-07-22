@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using XMorph.Currency.Core.Enums;
 using XMorph.Currency.Core.Models;
 using XMorph.Currency.Core.Utilities;
@@ -93,7 +93,7 @@ namespace XMorph.Currency.Core.Services {
             using var client = new HttpClient();
             var response = await client.PostAsync(company.Url, content);
             string rawResult = response.Content.ReadAsStringAsync().Result;
-            var tkambioModel = JsonConvert.DeserializeObject<TkambioModelResult>(rawResult);
+            var tkambioModel = JsonSerializer.Deserialize<TkambioModelResult>(rawResult);
 
             return new CompanyRateModel {
                 SellRate = tkambioModel.selling_rate,
@@ -109,7 +109,7 @@ namespace XMorph.Currency.Core.Services {
             using var client = new HttpClient();
             var response = await client.PostAsync(company.Url, null);
             string rawResult = response.Content.ReadAsStringAsync().Result;
-            var rextieModel = JsonConvert.DeserializeObject<RextieModelResult>(rawResult);
+            var rextieModel = JsonSerializer.Deserialize<RextieModelResult>(rawResult);
 
             return new CompanyRateModel {
                 SellRate = Convert.ToDouble(rextieModel?.fx_rate_sell),
