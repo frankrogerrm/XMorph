@@ -22,6 +22,7 @@
         public bool IsEnabled { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public string? Token { get; set; }
         public DateTime TokenCreatedDate { get; set; }
         public DateTime TokenExpiresDate { get; set; }
     }

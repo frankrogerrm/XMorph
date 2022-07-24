@@ -14,7 +14,7 @@ using XMorph.Currency.Web.Controllers.Models;
 namespace XMorph.Currency.Web.Controllers.Api {
 
 
-    [Route("api/Currency")]
+    [Route("api/authenticate")]
     [ApiController]
     [Authorize]
 

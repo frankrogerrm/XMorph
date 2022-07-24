@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
+using System.Text;
 using XMorph.Currency.Core.Services;
 using XMorph.Currency.DAL.DBContext;
 using XMorph.Currency.Repository.Generic;
@@ -13,9 +12,7 @@ using XMorph.Currency.Repository.Generic.Interface;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddDbContext<XMorphCurrencyContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("XmorphCurrencyDb"))
-);
+builder.Services.AddDbContext<XMorphCurrencyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("XmorphCurrencyDb")));
 builder.Services.AddControllers();
 
 builder.Services
