@@ -1,0 +1,10 @@
+.control-padding{
+    padding: 16px;
+}
+.full-width{
+    width: 100%;
+}
+.full-width-center{
+    margin: auto;
+    width: 50%;    
+}
